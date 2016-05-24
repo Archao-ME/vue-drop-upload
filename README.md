@@ -2,6 +2,9 @@
 
 ImageUploader.Vue
 
+## DEMO
+  [DEMO](http://blog.pikach.com/vue-drop-upload/)
+
 ## 使用方法
 
 ```
