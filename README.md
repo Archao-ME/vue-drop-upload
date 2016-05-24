@@ -1,27 +1,24 @@
-# cli-test
+# vue 拖拽上传组件
 
-> A Vue.js project
+ImageUploader.Vue
 
-## Build Setup
+## 使用方法
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+```
+<image-uploader id='imgUploader' name='ImageUploader' form-data='{"token":"YOUR TOKEN"}' action='http://up.qiniu.com/'>
+  <textarea slot="drop-main" v-model="uploadedFiles | json"  placeholder="Write a comment or drag your files here..."></textarea>
+    <p class="drag-info" slot="drop-info" v-if="fileProgress">
+      上传进度:{{fileProgress}}
+    </p>
+    <p class="drag-info" slot="drop-info" v-else>
+      拖入文件进行上传
+    </p>
+</image-uploader>
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+ - form-data : 表单数据
+ - action : 服务端地址
+ - slot : 目前两个，分别为 `drop-main`和`drop-info`
+ - 监听事件，在父级组件调用 : 目前两个，`$dispatch('onComplete',fileObject)`、`$dispatch('onFileProgress', e)`
+   - fileObject : 为服务返回的 JSON
+   - e : 上传进度监听
