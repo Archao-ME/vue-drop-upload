@@ -17,6 +17,25 @@ ImageUploader.Vue
       拖入文件进行上传
     </p>
 </image-uploader>
+
+```
+
+events处理上传
+
+```
+events: {
+  /**
+   * [msg export 2 object , formData and fileUpload(),you can upload files after dragDrop the file in the ImageUploader]
+   * @param  {[type]} msg [description]
+   * @return {[type]}     [description]
+   */
+  _onDrop: function(msg){
+    this.$http.get('http://127.0.0.1:3000/qiniu').then(response=>{
+      msg.formData.token = response.data.body
+      msg.fileUpload()
+    })
+  },
+}
 ```
 
  - form-data : 表单数据
@@ -25,3 +44,7 @@ ImageUploader.Vue
  - 监听事件，在父级组件调用 : 目前两个，`$dispatch('onComplete',fileObject)`、`$dispatch('onFileProgress', e)`
    - fileObject : 为服务返回的 JSON
    - e : 上传进度监听
+
+
+## Update:
+ - 拖拽文件后暴露接口给上级组件，提高复用性

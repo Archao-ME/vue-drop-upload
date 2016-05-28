@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import dragDrop from './mixins/dragDrop'
+import dragDrop from '../mixins/dragDrop'
 export default{
   mixins: [dragDrop],
   props: {
@@ -28,11 +28,7 @@ export default{
       }
     },
     action: String,//上传地址
-    formData: {//表单内容
-      coerce: function(val){
-        return JSON.parse(val)
-      }
-    }
+    formData: Object
   },
   data: function () {
     return {
@@ -45,14 +41,14 @@ export default{
       this.myFiles = document.getElementById(this.id).files
     },
     fileUpload: function () {
-      this._handleUplaod(this.myFiles[0])
+      this._handleUplaod()
     },
-    _handleUplaod: function (file) {
+    _handleUplaod: function () {
       var form = new window.FormData()
       var XHR = new window.XMLHttpRequest()
       form.append('Content-Type', 'multipart/form-data')
-      form.append('file', file)
-      form.append("key",file.name);
+      form.append('file', this.myFiles)
+      form.append("key",this.myFiles[0].name);
       for(var x in this.formData){
         form.append(x,this.formData[x]);
       }
@@ -64,7 +60,6 @@ export default{
       XHR.send(form)
     },
     _onProgress: function(e) {
-      // this is an internal call in XHR to update the progress
       e.percent = (e.loaded / e.total) * 100
       this.$dispatch('onFileProgress', e)
     },
@@ -75,19 +70,20 @@ export default{
   },
   events: {
     onDrop: function(msg){
-      console.log(msg)
       this.myFiles = msg
-      this.fileUpload()
       this.isDragOver = false
       this.classObject['is-drag-over'] = false
+      var that = this
+      this.$dispatch('_onDrop',{
+        formData: that.formData,
+        fileUpload: that.fileUpload.bind(this,msg),
+      })
     },
     onDragover: function(msg){
-      console.log(msg)
       this.isDragOver = true
       this.classObject['is-drag-over'] = true
     },
     onDragleave: function(msg){
-      console.log(msg)
       this.isDragOver = false
       this.classObject['is-drag-over'] = false
     }
