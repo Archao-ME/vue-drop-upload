@@ -1,13 +1,8 @@
 <template>
   <div v-bind:class="classObject" @drop="handleDrop" @dragover="handleDragover" @dragleave="handleDragleave">
-    <div v-bind:class="{'is-drag-over':isDragOver}">
+    <div v-bind:class="{'is-drag-over':isDragOver,'slot-wrapper':true}">
       <slot name="drop-main">
         <textarea  placeholder="Write a comment or drag your files here..."></textarea>
-      </slot>
-      <slot name="drop-info">
-          <p class="drag-info">
-            拖入文件进行上传
-          </p>
       </slot>
     </div>
   </div>
@@ -61,6 +56,7 @@ export default{
     },
     _onProgress: function (e) {
       e.percent = (e.loaded / e.total) * 100
+      e.percent = ~~e.percent
       this.$dispatch('onFileProgress', e)
     },
     _onComplete: function (e) {
@@ -82,10 +78,12 @@ export default{
     onDragover: function (msg) {
       this.isDragOver = true
       this.classObject['is-drag-over'] = true
+      this.$dispatch('_onDragover', true)
     },
     onDragleave: function (msg) {
       this.isDragOver = false
       this.classObject['is-drag-over'] = false
+      this.$dispatch('_onDragleave', true)
     }
   }
 }
@@ -96,13 +94,17 @@ export default{
 *{
   box-sizing: border-box;
 }
+.slot-wrapper{
+  margin: 0;
+}
 .drop-wraper{
   margin: 0;
-  width: 100%;
+  width: 100vw;
 }
 .drop-wraper textarea{
   margin: 0;
   width: 100%;
+
   min-height:200px;
   border: 1px solid #ddd;
   border-bottom: 1px dashed #ddd;

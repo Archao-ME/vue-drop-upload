@@ -11,8 +11,10 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "lint-fix": "eslint --fix *.js "
+    "lint-fix": "eslint --fix *.js ",
+    "elec": "electron ./ "
   },
+  "main": "electron.entry.js",
   "dependencies": {
     "vue": "^1.0.21",
     "babel-runtime": "^6.0.0"
@@ -28,6 +30,7 @@
     "connect-history-api-fallback": "^1.1.0",
     "cross-spawn": "^2.1.5",
     "css-loader": "^0.23.0",
+    "electron-prebuilt": "^1.2.0",
     "eslint": "^2.0.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-friendly-formatter": "^1.2.2",

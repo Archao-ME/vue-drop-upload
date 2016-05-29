@@ -31,14 +31,18 @@
     padding: 0;
     width: 600px;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
   }
   li{
     float: left;
-    width:100px;
     height:100px;
+    max-width: 110px;
     overflow: hidden;
   }
   li img {
+    margin: 0;
+    padding: 0;
     height:100%
   }
 </style>
