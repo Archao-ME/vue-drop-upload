@@ -3,11 +3,16 @@ const electron = require('electron');
 const {app} = electron;
 // Module to create native browser window.
 const {BrowserWindow} = electron;
+const {ipcMain} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
+ipcMain.on('close-main-window', function () {
+    console.log('quit');
+    app.quit();
+});
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({width: 450, height: 600});
@@ -16,7 +21,7 @@ function createWindow() {
   win.loadURL(`file://${__dirname}/dist/index.html`);
 
   // Open the DevTools.
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {

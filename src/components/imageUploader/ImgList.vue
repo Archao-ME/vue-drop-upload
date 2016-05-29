@@ -1,7 +1,7 @@
 <template>
   <div class="img-list-wrapper">
     <ul class="img-list">
-      <li class="img-item" v-for="img in imgArr" track-by="$index">
+      <li class="img-item" v-for="img in imgArr" track-by="$index" v-on:click="onItemClick(img)">
         <img v-bind:src="img.url" />
       </li>
     </ul>
@@ -20,6 +20,11 @@
         default: function () {
           return ''
         }
+      }
+    },
+    methods: {
+      onItemClick: function (item) {
+        this.$dispatch('onItemClick', item)
       }
     }
   }

@@ -1,20 +1,28 @@
 <template>
   <div id="app">
-    <logo></logo>
+    <!-- TODO: 关闭按钮  -->
+    <div id="logo" v-on:click="logoAlert">
+      <logo></logo>
+    </div>
     <image-uploader-index></image-uploader-index>
 </template>
 <script>
 import Logo from './components/VueLogo'
 import ImageUploaderIndex from './components/ImageUploaderIndex'
+// import EletronMothods from './components/mixins/electron'
 export default {
   components: {
     Logo,
     ImageUploaderIndex
+  },
+  methods: {
+    logoAlert: function () {
+      // EletronMothods.closeWin()
+    }
   }
 }
 </script>
 <style lang="scss">
-
 $wetAsphalt: #34495e;
 $midNightBlue: #2c3e50;
 $wisteria: #8e44ad;
@@ -28,6 +36,9 @@ $peterRiver: #3498db;
 * {
   padding:0;
   margin:0;
+}
+#logo {
+  z-index: 1002;
 }
 html {
   overflow: hidden;

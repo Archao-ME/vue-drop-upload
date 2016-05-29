@@ -1,13 +1,14 @@
 <template>
   <image-uploader id='imgUploader' name='ImageUploader' :form-data="formData" action='http://up.qiniu.com/'>
     <div class="whole-app" slot="drop-main">
+      <img-list :img-arr="uploadedFiles"></img-list>
     </div>
   </image-uploader>
   <!-- TODO: 提示上传样式  -->
   <div class="pin-hover" v-show="dragover"></div>
   <div :style="loadingStyle">
   </div>
-  <img-list :img-arr="uploadedFiles"></img-list>
+
 </template>
 <script>
 import ImageUploader from './ImageUploader/ImageUploader'
@@ -39,12 +40,8 @@ export default {
     }
   },
   events: {
-    _onDrop: function (msg) {
-      this.dragover = false
-      this.$http.get('http://api.pikach.com/qiniu').then(response => {
-        msg.formData.token = response.data.body
-        msg.fileUpload()
-      })
+    'onItemClick': function (msg) {
+      console.log(msg)
     },
     'onFileProgress': function (msg) {
       this.fileProgress = msg.percent
@@ -61,6 +58,13 @@ export default {
         this.loadingStyle.width = '0%'
       }
     },
+    _onDrop: function (msg) {
+      this.dragover = false
+      this.$http.get('http://api.pikach.com/qiniu').then(response => {
+        msg.formData.token = response.data.body
+        msg.fileUpload()
+      })
+    },
     '_onDragover': function (msg) {
       this.dragover = true
     },
@@ -73,9 +77,9 @@ export default {
 <style lang="scss">
 .whole-app{
   position: fixed;
-  top:0;
+  top:20vh;
   left:0;
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
 }
 .pin-hover{
