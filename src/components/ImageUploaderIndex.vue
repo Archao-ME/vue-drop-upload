@@ -36,7 +36,7 @@ export default {
      * @return {[type]}     [description]
      */
     _onDrop: function(msg){
-      this.$http.get('http://127.0.0.1:3000/qiniu').then(response=>{
+      this.$http.get('http://api.pikach.com/qiniu').then(response=>{
         msg.formData.token = response.data.body
         msg.fileUpload()
       })

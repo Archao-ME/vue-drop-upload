@@ -7,8 +7,10 @@ ImageUploader.Vue
 
 ## 使用方法
 
+### 组件模板
+
 ```
-<image-uploader id='imgUploader' name='ImageUploader' form-data='{"token":"YOUR TOKEN"}' action='http://up.qiniu.com/'>
+<image-uploader id='imgUploader' name='ImageUploader' form-data="formData" action='http://up.qiniu.com/'>
   <textarea slot="drop-main" v-model="uploadedFiles | json"  placeholder="Write a comment or drag your files here..."></textarea>
     <p class="drag-info" slot="drop-info" v-if="fileProgress">
       上传进度:{{fileProgress}}
@@ -19,13 +21,22 @@ ImageUploader.Vue
 </image-uploader>
 
 ```
+### 可配置
+ - form-data : 表单数据,在Object类型
+ - action : 服务端地址
+ - slot : 目前两个，分别为 `drop-main`和`drop-info`
+ - 可在父级调用的监听事件: 、
+   - `$dispatch('onComplete',fileObject)` fileObject : 为服务返回的 JSON
+   - `$dispatch('onFileProgress', e)` e : 上传进度监听
+   - `$dispatch('_onDrop',msgObject)` msgObject = {formData: that.formData,fileUpload: that.fileUpload.bind(this,msg)}
+ 其中 `formData` 为暴露的提交表单，因此可以在上传前处理, `fileUpload` 为调用上传接口
 
-events处理上传
+### 父级事件调用例子:
 
 ```
 events: {
   /**
-   * [msg export 2 object , formData and fileUpload(),you can upload files after dragDrop the file in the ImageUploader]
+   * [msg export a object include formData and fileUpload function ,you can modify formData and upload files after dragDrop the file in the ImageUploader]
    * @param  {[type]} msg [description]
    * @return {[type]}     [description]
    */
@@ -35,16 +46,17 @@ events: {
       msg.fileUpload()
     })
   },
+  'onFileProgress': function (msg) {
+    console.log(msg)
+    this.fileProgress = msg.percent
+  },
+  'onComplete': function (msg) {
+    this.fileName = msg.key
+    var fileItem  = {name:msg.key,url:msg.key}
+    this.uploadedFiles.push(fileItem)
+    this.fileProgress = 0
+  }
 }
 ```
-
- - form-data : 表单数据
- - action : 服务端地址
- - slot : 目前两个，分别为 `drop-main`和`drop-info`
- - 监听事件，在父级组件调用 : 目前两个，`$dispatch('onComplete',fileObject)`、`$dispatch('onFileProgress', e)`
-   - fileObject : 为服务返回的 JSON
-   - e : 上传进度监听
-
-
 ## Update:
  - 拖拽文件后暴露接口给上级组件，提高复用性
