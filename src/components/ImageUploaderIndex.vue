@@ -8,7 +8,7 @@
         拖入文件进行上传
       </p>
   </image-uploader>
-  <img-list :img-arr="uploadedFiles" ex-url="http://7xjzrl.com2.z0.glb.qiniucdn.com/">
+  <img-list :img-arr="uploadedFiles" :ex-url="exUrl">
   </img-list>
 </template>
 <script>
@@ -24,17 +24,13 @@ export default {
       fileProgress: 0,
       fileName: '',
       uploadedFiles: [],
+      exUrl: 'http://7xj0ss.com1.z0.glb.clouddn.com/',
       formData: {
         token: 'e2Ag_f0qlB42zWMJ8T-ekW1u7wGCCKo2vLMaJeOz:ZgH9VuRVEK1eGVwgbSOmc4W43eA=:eyJzY29wZSI6ImV4aGliaXRpb24iLCJkZWFkbGluZSI6MTQ2NDM1OTQ1Mn0='
       }
     }
   },
   events: {
-    /**
-     * [msg export 2 object , formData and fileUpload(),you can upload files after dragDrop the file in the ImageUploader]
-     * @param  {[type]} msg [description]
-     * @return {[type]}     [description]
-     */
     _onDrop: function (msg) {
       this.$http.get('http://api.pikach.com/qiniu').then(response => {
         msg.formData.token = response.data.body
@@ -46,10 +42,14 @@ export default {
       this.fileProgress = msg.percent
     },
     'onComplete': function (msg) {
-      this.fileName = msg.key
-      var fileItem = {name: msg.key, url: msg.key}
-      this.uploadedFiles.push(fileItem)
-      this.fileProgress = 0
+      if (msg.error) {
+        window.alert(msg.error)
+      } else {
+        this.fileName = msg.key
+        var fileItem = {name: msg.key, url: this.exUrl + msg.key}
+        this.uploadedFiles.push(fileItem)
+        this.fileProgress = 0
+      }
     }
   }
 }

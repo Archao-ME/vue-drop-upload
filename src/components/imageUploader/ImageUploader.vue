@@ -47,7 +47,7 @@ export default{
       var form = new window.FormData()
       var XHR = new window.XMLHttpRequest()
       form.append('Content-Type', 'multipart/form-data')
-      form.append('file', this.myFiles)
+      form.append('file', this.myFiles[0])
       form.append('key', this.myFiles[0].name)
       for (var x in this.formData) {
         form.append(x, this.formData[x])

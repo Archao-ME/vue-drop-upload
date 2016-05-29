@@ -5,7 +5,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 exports.assetsPath = function (_path) {
   return path.posix.join(config.build.assetsSubDirectory, _path)
 }
-
 exports.cssLoaders = function (options) {
   options = options || {}
   // generate loader string to be used with extract text plugin

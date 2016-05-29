@@ -11,6 +11,7 @@ module.exports = {
     productionSourceMap: true
   },
   dev: {
+    devPublicPath: '/',
     env: require('./dev.env'),
     port: 8080,
     proxyTable: {}

@@ -17,7 +17,7 @@ var app = express()
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
-  publicPath: webpackConfig.output.publicPath,
+  publicPath: config.dev.devPublicPath,
   stats: {
     colors: true,
     chunks: false

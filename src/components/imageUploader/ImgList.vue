@@ -2,7 +2,7 @@
   <div class="img-list-wrapper">
     <ul class="img-list">
       <li class="img-item" v-for="img in imgArr" track-by="$index">
-        <img v-bind:src="exUrl + img.url" />
+        <img v-bind:src="img.url" />
       </li>
     </ul>
   </div>
