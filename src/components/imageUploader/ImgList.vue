@@ -9,15 +9,15 @@
 </template>
 <script>
   export default {
-    props:{
-      imgArr:{//表单内容
-        coerce: function(val){
-          return val;
+    props: {
+      imgArr: {
+        coerce: function (val) {
+          return val
         }
       },
-      exUrl:{
+      exUrl: {
         type: String,
-        default: function (){
+        default: function () {
           return ''
         }
       }

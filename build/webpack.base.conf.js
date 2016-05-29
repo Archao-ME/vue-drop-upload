@@ -26,12 +26,12 @@ module.exports = {
   },
   module: {
     preLoaders: [
-      // {
-      //   test: /\.vue$/,
-      //   loader: 'eslint',
-      //   include: projectRoot,
-      //   exclude: /node_modules/
-      // }
+      {
+        test: /\.vue$/,
+        loader: 'eslint',
+        include: projectRoot,
+        exclude: /node_modules/
+      }
     ],
     loaders: [
       {
@@ -44,12 +44,12 @@ module.exports = {
         include: projectRoot,
         exclude: /node_modules/
       },
-      // {
-      //   test: /\.js$/,
-      //   loader: 'eslint',
-      //   include: projectRoot,
-      //   exclude: /node_modules/
-      // },
+      {
+        test: /\.js$/,
+        loader: 'eslint',
+        include: projectRoot,
+        exclude: /node_modules/
+      },
       {
         test: /\.json$/,
         loader: 'json'

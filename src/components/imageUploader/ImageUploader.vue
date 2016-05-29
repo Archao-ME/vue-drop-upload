@@ -20,14 +20,14 @@ export default{
     name: String,
     id: String,
     classObject: {
-      type:Object,
+      type: Object,
       default: function () {
         return {
-          'drop-wraper': true,
+          'drop-wraper': true
         }
       }
     },
-    action: String,//上传地址
+    action: String,
     formData: Object
   },
   data: function () {
@@ -48,42 +48,42 @@ export default{
       var XHR = new window.XMLHttpRequest()
       form.append('Content-Type', 'multipart/form-data')
       form.append('file', this.myFiles)
-      form.append("key",this.myFiles[0].name);
-      for(var x in this.formData){
-        form.append(x,this.formData[x]);
+      form.append('key', this.myFiles[0].name)
+      for (var x in this.formData) {
+        form.append(x, this.formData[x])
       }
-      XHR.upload.addEventListener("progress",this._onProgress,false);
-      XHR.addEventListener("load", this._onComplete, false);
-      XHR.addEventListener("error", this._onFailed, false);
-      XHR.addEventListener("abort", this._onCanceled, false);
-      XHR.open("POST", this.action)
+      XHR.upload.addEventListener('progress', this._onProgress, false)
+      XHR.addEventListener('load', this._onComplete, false)
+      XHR.addEventListener('error', this._onFailed, false)
+      XHR.addEventListener('abort', this._onCanceled, false)
+      XHR.open('POST', this.action)
       XHR.send(form)
     },
-    _onProgress: function(e) {
+    _onProgress: function (e) {
       e.percent = (e.loaded / e.total) * 100
       this.$dispatch('onFileProgress', e)
     },
-    _onComplete: function(e){
+    _onComplete: function (e) {
       var fileObject = JSON.parse(e.srcElement.response)
-      this.$dispatch('onComplete',fileObject)
+      this.$dispatch('onComplete', fileObject)
     }
   },
   events: {
-    onDrop: function(msg){
+    onDrop: function (msg) {
       this.myFiles = msg
       this.isDragOver = false
       this.classObject['is-drag-over'] = false
       var that = this
-      this.$dispatch('_onDrop',{
+      this.$dispatch('_onDrop', {
         formData: that.formData,
-        fileUpload: that.fileUpload.bind(this,msg),
+        fileUpload: that.fileUpload.bind(this, msg)
       })
     },
-    onDragover: function(msg){
+    onDragover: function (msg) {
       this.isDragOver = true
       this.classObject['is-drag-over'] = true
     },
-    onDragleave: function(msg){
+    onDragleave: function (msg) {
       this.isDragOver = false
       this.classObject['is-drag-over'] = false
     }

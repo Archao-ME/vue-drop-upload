@@ -15,11 +15,11 @@
 import ImageUploader from './ImageUploader/ImageUploader'
 import ImgList from './ImageUploader/ImgList'
 export default {
-  components:{
+  components: {
     ImageUploader,
     ImgList
   },
-  data: function (){
+  data: function () {
     return {
       fileProgress: 0,
       fileName: '',
@@ -35,8 +35,8 @@ export default {
      * @param  {[type]} msg [description]
      * @return {[type]}     [description]
      */
-    _onDrop: function(msg){
-      this.$http.get('http://127.0.0.1:3000/qiniu').then(response=>{
+    _onDrop: function (msg) {
+      this.$http.get('http://api.pikach.com/qiniu').then(response => {
         msg.formData.token = response.data.body
         msg.fileUpload()
       })
@@ -47,7 +47,7 @@ export default {
     },
     'onComplete': function (msg) {
       this.fileName = msg.key
-      var fileItem  = {name:msg.key,url:msg.key}
+      var fileItem = {name: msg.key, url: msg.key}
       this.uploadedFiles.push(fileItem)
       this.fileProgress = 0
     }
