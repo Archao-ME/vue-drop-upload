@@ -30,24 +30,27 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "../../assets/base.scss";
   ul {
     margin: 10px auto;
     padding: 0;
-    width: 600px;
-    overflow: hidden;
+    height: 500px;
+    overflow-y: scroll;
     margin: 0;
     padding: 0;
   }
   li{
-    float: left;
-    height:100px;
-    max-width: 110px;
+    background-color: $belizeHole;
+    width:100px;
+    max-height: 100px;
     overflow: hidden;
+    float:left;
   }
   li img {
     margin: 0;
     padding: 0;
-    height:100%
+    width:100%;
+    height:100%;
   }
 </style>

@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <!-- TODO: 关闭按钮  -->
-    <div id="logo" v-on:click="logoAlert">
+    <div class="window-buttons">
+      <window-buttons></window-buttons>
+    </div>
+    <div id="logo">
       <logo></logo>
     </div>
     <image-uploader-index></image-uploader-index>
@@ -9,36 +12,32 @@
 <script>
 import Logo from './components/VueLogo'
 import ImageUploaderIndex from './components/ImageUploaderIndex'
-// import EletronMothods from './components/mixins/electron'
+import WindowButtons from './components/WindowButtons'
+const {ipcRenderer} = window.require('electron')
 export default {
   components: {
     Logo,
-    ImageUploaderIndex
+    ImageUploaderIndex,
+    WindowButtons
   },
-  methods: {
-    logoAlert: function () {
-      // EletronMothods.closeWin()
+  events: {
+    onCloseWindow: function (msg) {
+      ipcRenderer.send('close-main-window', true)
     }
   }
 }
 </script>
 <style lang="scss">
-$wetAsphalt: #34495e;
-$midNightBlue: #2c3e50;
-$wisteria: #8e44ad;
-$amethyst: #9b59b6;
-$clouds: #ecf0f1;
-$sliver: #bdc3c7;
-$concrete: #95a5a6;
-$asbestos: #7f8c8d;
-$belizeHole: #2980b9;
-$peterRiver: #3498db;
+@import "./assets/base.scss";
 * {
   padding:0;
   margin:0;
 }
 #logo {
   z-index: 1002;
+}
+html,body {
+  -webkit-app-region: drag;
 }
 html {
   overflow: hidden;
@@ -50,7 +49,7 @@ body {
   background-color: $wetAsphalt;
 }
 #app {
-  color: #2c3e50;
+  color: $midNightBlue;
   font-family: Source Sans Pro, Helvetica, sans-serif;
   text-align: center;
   width: 100%;
@@ -63,5 +62,9 @@ body {
 .logo {
   width: 100px;
   height: 100px
+}
+.window-buttons {
+  height: 10px;
+  margin: 5px 3px;
 }
 </style>

@@ -112,9 +112,6 @@ export default{
   background-color: #fafafa;
   display: block;
 }
-.is-drag-over {
-  box-shadow: #c9ff00 0 0 3px;
-}
 .drag-info {
   padding: 7px 10px;
   color: #767676;
