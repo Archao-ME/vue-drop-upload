@@ -3,18 +3,25 @@
     <div class="name">
       <p>{{ name }}</p>
     </div>
-    <div class="url">
+    <div class="url" v-on:click="copyUrl(url)">
       <p>{{ url }}</p>
     </div>
   </div>
 </template>
 <script>
+import Electron from '../mixins/electron'
 export default {
   props: {
     name: String,
     url: String,
     info: String,
     isShow: Boolean
+  },
+  methods: {
+    copyUrl: function (text) {
+      Electron.copyUrl(text)
+      window.alert('已复制到黏贴板')
+    }
   }
 }
 </script>

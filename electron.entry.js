@@ -3,19 +3,23 @@ const electron = require('electron');
 const {app} = electron;
 // Module to create native browser window.
 const {BrowserWindow} = electron;
-const {ipcMain} = require('electron');
+const {ipcMain} = electron;
+const {clipboard} = electron;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
-ipcMain.on('close-main-window', function () {
-    console.log('quit');
-    app.quit();
+ipcMain.on('close-main-window', function (event,msg) {
+  console.log('quit');
+  app.quit();
+});
+ipcMain.on('clipboard-write', function (event,msg) {
+  clipboard.writeText(msg);
 });
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({width: 450, height: 600,resizable: false,frame: false});
+  win = new BrowserWindow({width: 450, height: 600,resizable: false,frame: false,transparent:true});
 
   // and load the index.html of the app.
   win.loadURL(`file://${__dirname}/dist/index.html`);

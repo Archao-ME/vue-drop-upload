@@ -12,7 +12,8 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "lint-fix": "eslint --fix *.js ",
-    "elec": "electron ./ "
+    "elec": "electron ./ ",
+    "elec-build": "electron-packager . EVImg --ignore=node_modules/* --ignore=.git --ignore=build --ignore=config --ignore=src --ignore=test --platform=darwin --arch=x64 --overwrite"
   },
   "main": "electron.entry.js",
   "dependencies": {

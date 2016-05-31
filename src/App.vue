@@ -13,7 +13,7 @@
 import Logo from './components/VueLogo'
 import ImageUploaderIndex from './components/ImageUploaderIndex'
 import WindowButtons from './components/WindowButtons'
-const {ipcRenderer} = window.require('electron')
+import Electron from './components/mixins/electron'
 export default {
   components: {
     Logo,
@@ -22,7 +22,7 @@ export default {
   },
   events: {
     onCloseWindow: function (msg) {
-      ipcRenderer.send('close-main-window', true)
+      Electron.closeWin()
     }
   }
 }
