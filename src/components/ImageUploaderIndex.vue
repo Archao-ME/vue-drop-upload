@@ -68,10 +68,12 @@ export default {
     },
     _onDrop: function (msg) {
       this.dragover = false
-      this.$http.get('http://api.pikach.com/qiniu').then(response => {
-        msg.formData.token = response.data.body
-        msg.fileUpload()
-      })
+      if (msg.doUpload) {
+        this.$http.get('http://api.pikach.com/qiniu').then(response => {
+          msg.formData.token = response.data.body
+          msg.fileUpload()
+        })
+      }
     },
     '_onDragover': function (msg) {
       this.dragover = true

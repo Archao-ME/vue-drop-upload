@@ -66,14 +66,22 @@ export default{
   },
   events: {
     onDrop: function (msg) {
+      var that = this
       this.myFiles = msg
       this.isDragOver = false
       this.classObject['is-drag-over'] = false
-      var that = this
-      this.$dispatch('_onDrop', {
-        formData: that.formData,
-        fileUpload: that.fileUpload.bind(this, msg)
-      })
+      if (msg[0].type.indexOf('image') === -1) {
+        window.alert('只允许上传图片')
+        this.$dispatch('_onDrop', {
+          doUpload: false
+        })
+      } else {
+        this.$dispatch('_onDrop', {
+          doUpload: true,
+          formData: that.formData,
+          fileUpload: that.fileUpload.bind(this, msg)
+        })
+      }
     },
     onDragover: function (msg) {
       this.isDragOver = true
